@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Speed</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.quote-display {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.quote-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    height: 100px;
+}
+
+.result {
+    font-size: 18px;
+    color: #333;
+    margin-top: 10px;
+}
+
+
+
+.button-62 {
+  background: linear-gradient(to bottom right, #EF4765, #FF9A5A);
+  border: 0;
+  border-radius: 12px;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 2.5;
+  outline: transparent;
+  padding: 0 1rem;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow .2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.button-62:not([disabled]):focus {
+  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+.button-62:not([disabled]):hover {
+  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+</style>
+<body>
+    <div class="container">
+        <h1>Typing Speed Test</h1>
+        <div id="quote-display" class="quote-display"></div>
+        <textarea id="quote-input" class="quote-input" placeholder="Start typing..."></textarea>
+        <div id="result" class="result"></div>
+        <button id="start-btn" class="button-62 ">Start Test</button>
+    </div>
+</body>
+<script>
+    const quoteDisplayElement = document.getElementById('quote-display');
+const quoteInputElement = document.getElementById('quote-input');
+const resultElement = document.getElementById('result');
+const startBtn = document.getElementById('start-btn');
+
+const quotes = [
+    "The quick brown fox jumps over the lazy dog.",
+    "A journey of a thousand miles begins with a single step.",
+    "To be or not to be, that is the question.",
+    "All that glitters is not gold.",
+    "Practice makes perfect."
+];
+
+let startTime;
+
+startBtn.addEventListener('click', startTest);
+
+function startTest() {
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    quoteDisplayElement.textContent = randomQuote;
+    quoteInputElement.value = null;
+    resultElement.textContent = '';
+    quoteInputElement.disabled = false;
+    quoteInputElement.focus();
+    startBtn.disabled = true;
+    startTime = new Date().getTime();
+    quoteInputElement.addEventListener('input', checkInput);
+}
+
+function checkInput() {
+    const quote = quoteDisplayElement.textContent;
+    const input = quoteInputElement.value;
+
+    if (input === quote) {
+        const endTime = new Date().getTime();
+        const timeTaken = (endTime - startTime) / 1000; // Time in seconds
+        const wordsPerMinute = (quote.split(' ').length / timeTaken) * 60;
+        resultElement.textContent = `Time: ${timeTaken.toFixed(2)} seconds, Speed: ${wordsPerMinute.toFixed(2)} WPM`;
+        quoteInputElement.disabled = true;
+        startBtn.disabled = false;
+    }
+}
+</script>
+
+</html>
